@@ -5,7 +5,7 @@ from aiortc.mediastreams import AudioStreamTrack, VideoStreamTrack
 import cv2
 import sounddevice as sd
 import numpy as np
-import json
+import json 
 logging.basicConfig(level=logging.INFO)
 
 class CameraVideoTrack(VideoStreamTrack):
@@ -62,6 +62,8 @@ async def create_peer_connection():
         'type': pc.localDescription.type
     }
     sdp_json = json.dumps(sdp_dict)
+    logging.info("SDP Offer created:")
+    logging.info(sdp_json)
     return sdp_json
 
 
