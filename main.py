@@ -54,7 +54,7 @@ async def create_peer_connection():
     video_track = CameraVideoTrack()
     pc.addTrack(video_track)
 
-    offer = await pc.createOffer()
+    offer = await pc.createAnswer()
     await pc.setLocalDescription(offer)
 
     sdp_dict = {
