@@ -67,6 +67,7 @@ async def create_peer_connection():
     sdp_json = json.dumps(sdp_dict)
     logging.info("SDP Offer created:")
     logging.info(sdp_json)
+    logging.info(sdp_dict['sdp'])
     return sdp_json
 
 
