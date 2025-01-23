@@ -51,9 +51,9 @@ class MicrophoneAudioTrack(AudioStreamTrack):
 
 async def create_peer_connection():
     pc = RTCPeerConnection()
-    video_track = CameraVideoTrack()
-    pc.addTrack(video_track)
-
+    # Add audio and video tracks as send-only transceivers
+    pc.addTransceiver("video", direction="sendonly").sender.track = CameraVideoTrack()
+    pc.addTransceiver("audio", direction="sendonly").sender.track = MicrophoneAudioTrack()
     offer = await pc.createOffer()
     await pc.setLocalDescription(offer)
 
