@@ -55,8 +55,8 @@ async def create_peer_connection():
     video_transceiver = pc.addTransceiver("video", direction="sendonly")
     video_transceiver.sender.replaceTrack(CameraVideoTrack())
 
-    audio_transceiver = pc.addTransceiver("audio", direction="sendonly")
-    audio_transceiver.sender.replaceTrack(MicrophoneAudioTrack())
+   # audio_transceiver = pc.addTransceiver("audio", direction="sendonly")
+   # audio_transceiver.sender.replaceTrack(MicrophoneAudioTrack())
     offer = await pc.createOffer()
     await pc.setLocalDescription(offer)
 
