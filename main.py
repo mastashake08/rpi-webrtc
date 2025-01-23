@@ -1,12 +1,11 @@
 import asyncio
 import logging
-import json
 from aiortc import RTCPeerConnection, RTCSessionDescription, MediaStreamTrack
 from aiortc.mediastreams import AudioStreamTrack, VideoStreamTrack
 import cv2
 import sounddevice as sd
 import numpy as np
-
+import json
 logging.basicConfig(level=logging.INFO)
 
 class CameraVideoTrack(VideoStreamTrack):
@@ -50,7 +49,7 @@ class MicrophoneAudioTrack(AudioStreamTrack):
         self.stream.stop()
         self.stream.close()
 
-async def create_offer():
+async def create_peer_connection():
     pc = RTCPeerConnection()
     video_track = CameraVideoTrack()
     pc.addTrack(video_track)
@@ -65,6 +64,21 @@ async def create_offer():
     sdp_json = json.dumps(sdp_dict)
     return sdp_json
 
+
+async def main():
+    pc = await create_peer_connection()
+
+    # Keep the application running
+    try:
+        while True:
+            await asyncio.sleep(1)
+    except KeyboardInterrupt:
+        logging.info("Shutting down.")
+    finally:
+        await pc.close()
+
 if __name__ == "__main__":
-    offer_json = asyncio.run(create_offer())
-    print(offer_json)
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logging.info("Application terminated.")
